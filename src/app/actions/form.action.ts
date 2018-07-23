@@ -18,9 +18,14 @@ export class DeleteProfileRow implements Action {
   constructor(public payload: number) {}
 }
 
+export class EditProfileRow implements Action {
+  readonly type = EDIT_ROW;
+  constructor(public payload: Profile) {}
+}
+
 export class LoadProfileRow implements Action {
   readonly type = LOAD_INITIAL_DATA;
   constructor(public payload: Profile[]) {}
 }
 
-export type Actions = AddProfileRow | LoadProfileRow | DeleteProfileRow;
+export type Actions = AddProfileRow | EditProfileRow | LoadProfileRow | DeleteProfileRow;

@@ -67,4 +67,9 @@ export class UserlistComponent implements OnInit {
     this.modalRef = this.modalService.show(UserformComponent, {initialState});
     // this.modalRef.content.rowData = rowData;
   }
+
+  deleteRow(idx: number) {
+    debugger;
+    this.store.dispatch(new formActions.DeleteProfileRow(idx));
+  }
 }

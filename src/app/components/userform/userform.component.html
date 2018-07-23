@@ -36,6 +36,7 @@
         <input class="form-control" formControlName="street" [(ngModel)]="rowData.street">
       </label>
     </div>
+    <input type='hidden' formControlName="id" [(ngModel)]="rowData.id" />
     <input type='hidden' formControlName="number" [(ngModel)]="rowData.number" />
     <button type="submit">Save</button>
   </form>

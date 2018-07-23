@@ -15,6 +15,20 @@ export function reducer(state: Profile[] = [], action: formActions.Actions) {
     case formActions.LOAD_INITIAL_DATA:
       return [...state, ...action.payload];
     case formActions.DELETE_ROW:
+      const arr = [...state];
+      const id = arr.findIndex(ele => ele.id === action.payload);
+      arr.splice(id, 1);
+      return [...arr];
+    case formActions.EDIT_ROW:
+      const arr_ = [...state];
+      // const ele_ = arr_.find(ele => ele.number === action.payload.number);
+      const newarr = arr_.map(ele => {
+        if (ele.number === action.payload.number) {
+          return Object.assign({}, ele, action.payload);
+        }
+        return ele;
+      });
+      return [...newarr];
     default:
       return state;
   }

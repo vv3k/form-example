@@ -13,7 +13,7 @@
           {{item[data]}}
         </td>
         <td>
-          <button type='button' class='btn btn-primary'> Delete</button>
+          <button type='button' class='btn btn-primary' (click)="deleteRow(item['id'])"> Delete</button>
         </td>
         <td>
           <button type='button' class='btn btn-primary' (click)="editRow(item, i)">Edit</button>

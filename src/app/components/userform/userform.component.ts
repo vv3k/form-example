@@ -61,8 +61,15 @@ export class UserformComponent implements OnInit, AfterContentInit {
 
   onSave(formData: FormGroup) {
     debugger;
-    this.store.dispatch(new formActions.AddProfileRow(formData.value));
-    this.userForm.reset();
+    if (this.title === 'Edit Data') {
+      // Edit save Logic
+      this.store.dispatch(new formActions.EditProfileRow(formData.value));
+    } else {
+      // Add Save Logic
+      this.store.dispatch(new formActions.AddProfileRow(formData.value));
+      this.userForm.reset();
+    }
+
     this.bsModalRef.hide();
     // this.global.count = this.global.dbData.length + 1;
     // this.userForm.patchValue(formdata.value);
