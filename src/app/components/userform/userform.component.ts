@@ -1,28 +1,49 @@
-import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  AfterContentInit,
+} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {BsModalRef} from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import {Form} from '@angular/forms';
+import {Observable} from 'rxjs/Observable';
+import {Store} from '@ngrx/store';
 
+import {Profile} from '../../models/form.model';
 import {Global} from '../../common/global';
-import { Form } from '@angular/forms/src/directives/form_interface';
+import {AppState} from '../../app.state';
+import * as formActions from '../../actions/form.action';
 
 @Component({
   selector: 'app-userform',
   templateUrl: './userform.component.html',
   styleUrls: ['./userform.component.css'],
 })
-export class UserformComponent implements OnInit, AfterViewInit {
-  constructor(private fb: FormBuilder, public bsModalRef: BsModalRef, public global: Global) {}
+export class UserformComponent implements OnInit, AfterContentInit {
+  userList: Observable<Profile[]>;
+
+  constructor(
+    private fb: FormBuilder,
+    public bsModalRef: BsModalRef,
+    public global: Global,
+    private store: Store<AppState>
+  ) {
+    // this.store = store.select('Profiles');
+  }
 
   userForm: FormGroup;
   title: string;
   index: number;
+  public rowData: Profile;
 
   ngOnInit() {
     this.initializeForm();
   }
 
-  ngAfterViewInit() {
-    
+  ngAfterContentInit() {
+    console.log(this.rowData);
+    // this.userForm.patchValue(this.rowData);
   }
 
   initializeForm() {
@@ -36,12 +57,14 @@ export class UserformComponent implements OnInit, AfterViewInit {
       street: ['', Validators.required],
       number: ['', Validators.required],
     });
-
-    
   }
 
-  onSave(formdata: FormGroup) {
-    this.global.count = this.global.dbData.length + 1;
+  onSave(formData: FormGroup) {
+    debugger;
+    this.store.dispatch(new formActions.AddProfileRow(formData.value));
+    this.userForm.reset();
+    this.bsModalRef.hide();
+    // this.global.count = this.global.dbData.length + 1;
     // this.userForm.patchValue(formdata.value);
   }
 }
